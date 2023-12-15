@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.header{
+  background-color: indigo;
+  font-weight: bold;
+  /* font-size: 18px; */
+  padding: 1px;
+  text-align: center;
+  color: gold;
+}
+.container{
+  width: 15%;
+  margin-top: 20px;
+  margin: auto;
+}
+
+.custom-input {
+  padding: 15px;
+  border: none;
+  background: rgba(0, 0, 0, 0.1);
+  width: 80%;
+  border-radius: 8px;
+}
+
+.input-wrapper {
+  margin: 20px;
+  text-align: center;
+}
