@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 export default function Form() {
     const [user, setUser] = useState({
@@ -9,8 +10,11 @@ export default function Form() {
         file:null
     })
 
+    const navigate = useNavigate()
+    // const localStor = localStorage.getItem('authToken') 
     const[getData, setGetData] = useState([])
     const [editItem, setEditItem] = useState(null)
+
      
     const onchangeHandler = (e) =>{
         // console.log(e);
@@ -97,11 +101,28 @@ export default function Form() {
         setUser(selectedItem)
        }
 
+      //  useEffect(()=>{
+      //   const token = localStorage.getItem('authToken') || []
+      //   if(!token){
+      //     navigate('/')
+      //   }
+      // },[navigate])
+
+       const logOut = () => {
+        const data = window.confirm('Are You ready to leave the Page')
+        if(data){
+          localStorage.removeItem('authToken')
+          navigate("/")
+        }
+       }
+
   return (
     <>
       <div className="header">
         <h1 className="heading">CRUD FORM</h1>
       </div>
+      <button onClick={logOut} style={{ padding: '15px', width: "20%", color: 'gold', backgroundColor: 'indigo', border: 'none', borderRadius: '8px', marginBottom: '10px',marginTop: '10px', cursor: 'pointer' }}>Logout</button>
+
       <div className='container' style={{ marginTop: '30px', background: '#dadada', width: '30%' }}>
         <form onSubmit={formHandle}>
           <div className="input-wrapper" >
@@ -113,10 +134,10 @@ export default function Form() {
           <div className="input-wrapper">
             <input className="custom-input" type='password' name='password' value={user.password} onChange={onchangeHandler}  placeholder='Enter Password' />
           </div>
-          <div className="input-wrapper">
-          <input className="custom-input" type='file' name='file' onChange={(e) => setUser({ ...user, file: e.target.files[0] })} />
+          {/* <div className="input-wrapper">
+          <input className="custom-input" type='file' name='file' onChange={(e) => setUser({ ...user, file: e.target.files[0] })} /> 
 
-          </div>
+          </div> */}
           <div style={{ textAlign: 'center' }}>
             <button style={{ padding: '15px', width: "60%", color: 'gold', backgroundColor: 'indigo', border: 'none', borderRadius: '8px', marginBottom: '10px', cursor: 'pointer' }}>{editItem ? 'Update' : 'Submit'}</button>
           </div>
@@ -130,7 +151,7 @@ export default function Form() {
         <th>Name</th>
         <th>Email</th>
         <th>password</th>
-        <th>ImgURL</th>
+        {/* <th>ImgURL</th> */}
         <th>Remove</th>
         <th>Update</th>
         </tr>
@@ -142,7 +163,7 @@ export default function Form() {
                         <td>{data.name}</td>
                         <td>{data.email}</td>
                         <td>{data.password}</td>
-                        <td>{data.imgURL}</td>
+                        {/* <td>{data.imgURL}</td> */}
                         <td><button onClick={()=>removeData(data._id)} style={{backgroundColor:'indigo', color:'gold',width:'70px',border:'none',padding:'6px', cursor:'pointer'}} >Delete</button></td>
                         <td><button onClick={()=>editData(data._id)} style={{backgroundColor:'indigo', color:'gold',width:'70px',border:'none',padding:'6px', cursor:'pointer'}} >Edit</button></td>
                     </tr>

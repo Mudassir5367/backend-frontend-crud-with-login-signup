@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
   // Link,
   // useRouteMatch,
 } from "react-router-dom";
@@ -10,7 +11,10 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import CurdForm from './components/CurdForm';
 
-
+const PrivateRoute = ({ element }) => {
+  const authToken = localStorage.getItem('authToken');
+  return authToken ? element : <Navigate to="/" />;
+};
 
 function App() {
   return (
@@ -20,7 +24,7 @@ function App() {
    <Routes>
     <Route path="/" element={<Login/>} />
     <Route path="/signup" element={<Signup/>} />
-    <Route path="/crudForm" element={<CurdForm/>} />
+    <Route path="/crudForm" element={<PrivateRoute element={<CurdForm />} />} />
     {/* <Route path="/createuser" element={<SignUp />} /> */}
    </Routes>
    </div>
